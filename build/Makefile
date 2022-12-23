@@ -123,35 +123,59 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-# target to build an object file
-main.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.o
+main.o: main.cpp.o
+
 .PHONY : main.o
 
-# target to preprocess a source file
-main.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.i
+# target to build an object file
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+
 .PHONY : main.i
 
-# target to generate assembly for a file
-main.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.s
+# target to preprocess a source file
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+
 .PHONY : main.s
 
+# target to generate assembly for a file
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
+.PHONY : main.cpp.s
+
+traj_opt.o: traj_opt.cpp.o
+
+.PHONY : traj_opt.o
+
 # target to build an object file
-robot.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/robot.o
-.PHONY : robot.o
+traj_opt.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/traj_opt.cpp.o
+.PHONY : traj_opt.cpp.o
+
+traj_opt.i: traj_opt.cpp.i
+
+.PHONY : traj_opt.i
 
 # target to preprocess a source file
-robot.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/robot.i
-.PHONY : robot.i
+traj_opt.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/traj_opt.cpp.i
+.PHONY : traj_opt.cpp.i
+
+traj_opt.s: traj_opt.cpp.s
+
+.PHONY : traj_opt.s
 
 # target to generate assembly for a file
-robot.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/robot.s
-.PHONY : robot.s
+traj_opt.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/traj_opt.cpp.s
+.PHONY : traj_opt.cpp.s
 
 # Help Target
 help:
@@ -165,9 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... robot.o"
-	@echo "... robot.i"
-	@echo "... robot.s"
+	@echo "... traj_opt.o"
+	@echo "... traj_opt.i"
+	@echo "... traj_opt.s"
 .PHONY : help
 
 

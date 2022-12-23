@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/main.dir/main.o"
-  "CMakeFiles/main.dir/robot.o"
+  "CMakeFiles/main.dir/main.cpp.o"
+  "CMakeFiles/main.dir/traj_opt.cpp.o"
   "main"
   "main.pdb"
 )

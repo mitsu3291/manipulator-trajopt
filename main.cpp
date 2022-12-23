@@ -1,43 +1,48 @@
-#include "robot.hpp"
 #include "matplotlibcpp.h"
+#include "traj_opt.hpp"
 
 namespace plt = matplotlibcpp;
 
 int main(){
-    double m1 = 1;
-    double m2 = 1;
-    double l1 = 1;
-    double l2 = 1;
-    double I1 = 1;
-    double I2 = 1;
+    // TrajOpt Params
+    double dim_x = 3;
+    double dim_u = 2;
+    double T = 10;
+    double dt = 1e-2;
+    int N = T / dt;
+    double alpha = 1e-2;
 
-    Robot robot(m1,
-                m2,
-                l1,
-                l2,
-                I1,
-                I2);
+    Eigen::MatrixXd x = Eigen::MatrixXd::Zero(dim_x, N+1);
+    Eigen::MatrixXd u = Eigen::MatrixXd::Zero(dim_u, N);
+    Eigen::MatrixXd lam = Eigen::MatrixXd::Zero(dim_x, N+1);
+    Eigen::MatrixXd s = Eigen::MatrixXd::Zero(dim_u, N);
+    Eigen::VectorXd x_ref(3);
+    x_ref << 3, 3, 0;
 
-    int n = 50000;
-    std::vector<double> origin = {0,0};
-    std::vector<double> joint_pos1, joint_pos2;
-    std::vector<double> x1_traj(n), y1_traj(n), x2_traj(n), y2_traj(n);
-    for (int i = 0; i < n; i++){
-        robot.forward_dynamics(0,0);
-        joint_pos1 = robot.get_joint_pos(1);
-        joint_pos2 = robot.get_joint_pos(2);
-        if (i % 50 == 0){
-            // figure settings
-            plt::clf();
-            plt::xlim(-2.5, 2.5);
-            plt::ylim(-2.5, 2.5);
+    TrajOpt traj_opt(alpha,
+                     dt,
+                     N, 
+                     x,
+                     u,
+                     lam,
+                     s,
+                     x_ref);
 
-            // plot
-            plt::plot({origin[0], joint_pos1[0]}, {origin[1], joint_pos1[1]}, "bo-");
-            plt::plot({joint_pos1[0], joint_pos2[0]}, {joint_pos1[1], joint_pos2[1]}, "bo-");
-            plt::pause(0.01);
-        }
+    traj_opt.solve_opt_traj();
+
+    std::vector<double> time_traj(N), x_traj(N), y_traj(N), th_traj(N), v_traj(N), omega_traj(N);
+    for (int i = 0; i < N; i++){
+        time_traj[i] = i*dt;
+        x_traj[i] = traj_opt.m_x(0, i);
+        y_traj[i] = traj_opt.m_x(1, i);
+        th_traj[i] = traj_opt.m_x(2, i);
+        v_traj[i] = traj_opt.m_u(0, i);
+        omega_traj[i] = traj_opt.m_u(1, i);
     }
-    std::cout << robot.m_th1 << " " << robot.m_th2 << std::endl;
-    // plt::show();
+    std::cout << th_traj[N-1] << std::endl;
+    plt::plot(x_traj, y_traj, {{"label", "position"}});
+    plt::plot(time_traj, v_traj, {{"label", "velocity"}});
+    plt::plot(time_traj, omega_traj, {{"label", "omega"}});
+    plt::legend();
+    plt::show();
 }

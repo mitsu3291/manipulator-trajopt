@@ -3,6 +3,8 @@
 #include <Eigen/Geometry>
 #include <Eigen/LU>
 
+#pragma once
+
 class Robot{
 public:
     double m_m1, m_m2, m_l1, m_l2, m_lg1, m_lg2, m_I1, m_I2, m_g, m_dt;

@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/main.dir/main.o CMakeFiles/main.dir/robot.o  -o main  -lpython3.8 
+/usr/bin/c++     CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/traj_opt.cpp.o  -o main  -lpython3.8 

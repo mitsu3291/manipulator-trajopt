@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/traj_opt.cpp.o  -o main  -lpython3.8 

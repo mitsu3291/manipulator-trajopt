@@ -1,3 +1,0 @@
-/home/mitsuki/workspace/class/ohtsuka/build/CMakeFiles/rebuild_cache.dir
-/home/mitsuki/workspace/class/ohtsuka/build/CMakeFiles/edit_cache.dir
-/home/mitsuki/workspace/class/ohtsuka/build/CMakeFiles/main.dir

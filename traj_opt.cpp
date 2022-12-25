@@ -30,8 +30,8 @@ Eigen::VectorXd TrajOpt::f(Eigen::VectorXd x, Eigen::VectorXd u){
 
 double TrajOpt::calc_stage_cost(Eigen::VectorXd x, Eigen::VectorXd u){
     double L = (1/2)*((x-m_x_ref).squaredNorm() + u.squaredNorm());
-    if (std::abs(u[0]) < 3){
-        L += log(9 - u[0]*u[0]);
+    if (u[0] > 1.8){
+        L += 1000*std::pow((u[0] - 1.8), 2);
     }
 
     return L;
@@ -61,16 +61,16 @@ Eigen::VectorXd TrajOpt::calc_dhdx(Eigen::VectorXd x, Eigen::VectorXd u, Eigen::
 Eigen::VectorXd TrajOpt::calc_dhdu(Eigen::VectorXd x, Eigen::VectorXd u, Eigen::VectorXd lam){
     Eigen::VectorXd dhdu(2);
     dhdu[0] = u[0] + lam[0]*std::cos(x[2]) + lam[1]*std::sin(x[2]);
-    if (std::abs(u[0]) < 3){
-        dhdu[0] += -1e-3*2*u[0]/(9 - u[0]*u[0]);
-    }
     dhdu[1] = u[1] + lam[2];
+    if (u[0] > 1.8){
+        dhdu[0] += 200*(u[0] - 1.8);
+    }
 
     return dhdu;
 }
 
 void TrajOpt::solve_opt_traj(){
-    for (int i = 0; i < 1000; i++){
+    for (int i = 0; i < 10000; i++){
         // advance simulation and get x
         for (int j = 0; j < m_N; j++){
             m_x.col(j+1) = m_x.col(j) + this->f(m_x.col(j), m_u.col(j))*m_dt;

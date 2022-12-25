@@ -90,12 +90,11 @@ void TrajOpt::solve_opt_traj(){
         if (sol_err < 1e-2){
             std::cout << "converge" << std::endl;
             break;
-        }else if (i == 999){
-            std::cout << "error did not converge" << std::endl;
         }
 
         for (int j = 0; j < m_N; j++){
             m_u.col(j) += m_alpha*m_s.col(j); 
         }
     }
+    std::cout << "error did not converge" << std::endl;
 }
